@@ -18,11 +18,6 @@ google-chrome:
     - key_url: https://dl-ssl.google.com/linux/linux_signing_key.pub
     - require_in:
       - pkg: google-chrome
-    - require:
-      - pkg: python-software-properties
-
-python-software-properties:
-  pkg.installed
 {% elif grains['os_family'] == 'RedHat' %}
   pkgrepo.managed:
     - humanname: google-chrome

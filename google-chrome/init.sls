@@ -1,4 +1,4 @@
-{% set version = salt['pillar.get']('google-chrome:version', 'stable') %}
+{% set version = salt['pillar.get']('google-chrome:version', 'beta') %}
 
 {% if grains['osarch'] == 'amd64' %}
 {% set arch = 'x86_64' %}
@@ -10,11 +10,12 @@
 
 google-chrome:
 {% if grains['os_family'] == 'Debian' %}
+# http://www.ubuntuupdates.org/ppa/google_chrome
   pkg.installed:
     - name: google-chrome-{{ version }}
   pkgrepo.managed:
-    - file: /etc/apt/sources.list.d/google-chrome.list
-    - name: deb http://dl.google.com/linux/chrome/deb/ stable main
+    - file: /etc/apt/sources.list.d/google-chrome.list      
+    - name: deb [arch={{ grains['osarch'] }}] http://dl.google.com/linux/chrome/deb/ stable main
     - key_url: https://dl-ssl.google.com/linux/linux_signing_key.pub
     - require_in:
       - pkg: google-chrome
